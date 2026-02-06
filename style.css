@@ -8,6 +8,10 @@ body {
     height: 100vh;
 }
 
+.reading {
+    min-height: 50vh;
+}
+
 .shelf {
     display: flex;
     flex-wrap: wrap;
@@ -17,4 +21,5 @@ body {
 .card {
     border: red solid 2px;
     background-color: bisque;
+    width: 200px;
 }
