@@ -9,14 +9,26 @@ function Book(title, author, pages, status) {
 }
 
 function addBookToLibrary(title, author, pages, status) {
-  // take params, create a book then store it in the array
   const book = new Book(title, author, pages, status);
   library.push(book);
 }
 
-const createCard = () => {
-    
+const createCard = (book) => {
+    card = document.querySelector(".card").cloneNode(true);
+    card.querySelector(".title").textContent = book.title;
+    card.querySelector(".author").textContent = book.author;
+    card.querySelector(".pages").textContent = book.pages;
+    card.querySelector(".status").textContent = book.read;
+    return card;
+}
+
+const displayBooks = () => {
+    const page = document.querySelector(".reading");
+    for (const book of library) {
+        page.appendChild(createCard(book));
+    }
 }
 
 addBookToLibrary("Hello", "John", 123, false);
 addBookToLibrary("Goodbye", "Jane", 456, true);
+displayBooks();
