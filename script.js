@@ -1,4 +1,11 @@
 const library = [];
+const page = document.querySelector(".shelf");
+const readShelf = document.querySelector(".read");
+const dialog = document.querySelector("dialog");
+const addBtn = document.querySelector(".new");
+const submit = document.querySelector(".add");
+const cancel = document.querySelector(".cancel");
+const form = document.querySelector("form");
 
 function Book(title, author, pages) {
     this.title = title;
@@ -34,17 +41,10 @@ const createCard = (book) => {
     return card;
 }
 
-const page = document.querySelector(".shelf");
-const readShelf = document.querySelector(".read");
-
 const displayBook = (book) => {
-    /*page.innerHTML = '';
-    for (const book of library) {
-        page.appendChild(createCard(book));
-    }*/
-   page.appendChild(createCard(book));
+    page.appendChild(createCard(book));
 
-    // add event listeners to buttons now
+    // Must query all buttons at every new addition, in order not to leave anything out
     const deleteBtns = document.querySelectorAll(".delete");
     deleteBtns.forEach(btn => removeCard(btn));
 
@@ -67,17 +67,18 @@ const removeCard = (btn) => {
     });
 }
 
-///
 const moveBook = (checkBox, book) => {
     checkBox.addEventListener("change", () => {
         if (checkBox.checked) {
-            readShelf.appendChild(checkBox.parentElement);
-            book.isRead();
-            // toggle the book read status
+            if (!readShelf.contains(checkBox.parentElement)) {
+                readShelf.appendChild(checkBox.parentElement);
+                book.isRead();
+            }
         } else {
+            if (!page.contains(checkBox.parentElement)) {
             page.appendChild(checkBox.parentElement);
             book.isRead();
-            // toggle the book read status
+            }
         }
     });
 }
@@ -87,16 +88,9 @@ const removeBook = (book) => {
     library.splice(index, 1);
 }
 
-const dialog = document.querySelector("dialog");
-const addBtn = document.querySelector(".new");
-
 addBtn.addEventListener("click", () => {
     dialog.showModal();
 });
-
-const submit = document.querySelector(".add");
-const cancel = document.querySelector(".cancel");
-const form = document.querySelector("form");
 
 submit.addEventListener("click", (e) => {
     const title = document.querySelector(".book-title").value;
@@ -105,7 +99,6 @@ submit.addEventListener("click", (e) => {
     e.preventDefault();
     if (form.checkValidity()) {
         const book = addBookToLibrary(title, author, pages);
-        ///
         displayBook(book);
         dialog.close();
         form.reset();
@@ -120,5 +113,4 @@ cancel.addEventListener("click", () => {
 
 const book1 = addBookToLibrary("A Handmaid's Tale", "Margaret Atwood", 420);
 const book2 = addBookToLibrary("A Little Life", "Hanya Yanagihara", 736);
-displayBook(book1);
-displayBook(book2);
+library.forEach(book => displayBook(book));
