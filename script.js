@@ -8,12 +8,20 @@ function Book(title, author, pages) {
     this.id = crypto.randomUUID();
 }
 
+Book.prototype.isRead = function() {
+    if (this.read) {
+        this.read = false;
+    } else {
+        this.read = true;
+    }
+}
+
 function addBookToLibrary(title, author, pages) {
   const book = new Book(title, author, pages);
   library.push(book);
+  return book;
 }
 
-// Maybe add a delete card in here to the button via event listener
 const createCard = (book) => {
     card = document.querySelector(".card").cloneNode(true);
     card.style.visibility = "visible";
@@ -22,20 +30,26 @@ const createCard = (book) => {
     card.querySelector(".pages").textContent = book.pages;
     card.querySelector(".status").textContent = book.read;
     card.dataset.bookId = book.id;
+    card.querySelector(".read-status").checked = false;
     return card;
 }
 
 const page = document.querySelector(".shelf");
+const readShelf = document.querySelector(".read");
 
-const displayBooks = () => {
-    page.innerHTML = '';
+const displayBook = (book) => {
+    /*page.innerHTML = '';
     for (const book of library) {
         page.appendChild(createCard(book));
-    }
+    }*/
+   page.appendChild(createCard(book));
 
     // add event listeners to buttons now
     const deleteBtns = document.querySelectorAll(".delete");
     deleteBtns.forEach(btn => removeCard(btn));
+
+    const statusBtns = document.querySelectorAll(".read-status");
+    statusBtns.forEach(box => moveBook(box, book));
 }
 
 const removeCard = (btn) => {
@@ -43,10 +57,29 @@ const removeCard = (btn) => {
         for (const book of library) {
             if (btn.parentElement.dataset.bookId === book.id) {
                 removeBook(book);
-                page.removeChild(btn.parentElement);
+                if (page.contains(btn.parentElement)) {
+                    page.removeChild(btn.parentElement);
+                } else {
+                    readShelf.removeChild(btn.parentElement);
+                }
             }
         }
-    })
+    });
+}
+
+///
+const moveBook = (checkBox, book) => {
+    checkBox.addEventListener("change", () => {
+        if (checkBox.checked) {
+            readShelf.appendChild(checkBox.parentElement);
+            book.isRead();
+            // toggle the book read status
+        } else {
+            page.appendChild(checkBox.parentElement);
+            book.isRead();
+            // toggle the book read status
+        }
+    });
 }
 
 const removeBook = (book) => {
@@ -71,8 +104,9 @@ submit.addEventListener("click", (e) => {
     const pages = document.querySelector(".book-pages").value;
     e.preventDefault();
     if (form.checkValidity()) {
-        addBookToLibrary(title, author, pages);
-        displayBooks();
+        const book = addBookToLibrary(title, author, pages);
+        ///
+        displayBook(book);
         dialog.close();
         form.reset();
     } else {
@@ -84,6 +118,7 @@ cancel.addEventListener("click", () => {
     dialog.close();
 });
 
-addBookToLibrary("Hello", "John", 123);
-addBookToLibrary("Goodbye", "Jane", 456);
-displayBooks();
+const book1 = addBookToLibrary("A Handmaid's Tale", "Margaret Atwood", 420);
+const book2 = addBookToLibrary("A Little Life", "Hanya Yanagihara", 736);
+displayBook(book1);
+displayBook(book2);
