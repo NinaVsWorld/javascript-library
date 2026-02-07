@@ -13,8 +13,10 @@ function addBookToLibrary(title, author, pages) {
   library.push(book);
 }
 
+// Maybe add a delete card in here to the button via event listener
 const createCard = (book) => {
     card = document.querySelector(".card").cloneNode(true);
+    card.style.visibility = "visible";
     card.querySelector(".title").textContent = book.title;
     card.querySelector(".author").textContent = book.author;
     card.querySelector(".pages").textContent = book.pages;
@@ -23,12 +25,33 @@ const createCard = (book) => {
     return card;
 }
 
+const page = document.querySelector(".shelf");
+
 const displayBooks = () => {
-    const page = document.querySelector(".shelf");
     page.innerHTML = '';
     for (const book of library) {
         page.appendChild(createCard(book));
     }
+
+    // add event listeners to buttons now
+    const deleteBtns = document.querySelectorAll(".delete");
+    deleteBtns.forEach(btn => removeCard(btn));
+}
+
+const removeCard = (btn) => {
+    btn.addEventListener("click", () => {
+        for (const book of library) {
+            if (btn.parentElement.dataset.bookId === book.id) {
+                removeBook(book);
+                page.removeChild(btn.parentElement);
+            }
+        }
+    })
+}
+
+const removeBook = (book) => {
+    const index = library.indexOf(book);
+    library.splice(index, 1);
 }
 
 const dialog = document.querySelector("dialog");
@@ -51,6 +74,7 @@ submit.addEventListener("click", (e) => {
         addBookToLibrary(title, author, pages);
         displayBooks();
         dialog.close();
+        form.reset();
     } else {
         form.reportValidity();
     }

@@ -10,16 +10,19 @@ body {
 
 .reading {
     min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .shelf {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
 }
 
 .card {
     border: red solid 2px;
     background-color: bisque;
     width: 200px;
+    visibility: hidden;
 }
