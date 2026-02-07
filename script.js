@@ -6,6 +6,8 @@ const addBtn = document.querySelector(".new");
 const submit = document.querySelector(".add");
 const cancel = document.querySelector(".cancel");
 const form = document.querySelector("form");
+const checkBox = document.querySelector(".is-read");
+let isChecked = false;
 
 function Book(title, author, pages) {
     this.title = title;
@@ -35,14 +37,22 @@ const createCard = (book) => {
     card.querySelector(".title").textContent = book.title;
     card.querySelector(".author").textContent = book.author;
     card.querySelector(".pages").textContent = book.pages;
-    card.querySelector(".status").textContent = book.read;
     card.dataset.bookId = book.id;
-    card.querySelector(".read-status").checked = false;
+
+    if (isChecked) {
+        book.isRead();
+        card.querySelector(".read-status").checked = true;
+    }
     return card;
 }
 
 const displayBook = (book) => {
-    page.appendChild(createCard(book));
+    const card = createCard(book);
+    if (card.querySelector(".read-status").checked) {
+        readShelf.appendChild(card);
+    } else {
+        page.appendChild(card);
+    }
 
     // Must query all buttons at every new addition, in order not to leave anything out
     const deleteBtns = document.querySelectorAll(".delete");
@@ -76,8 +86,8 @@ const moveBook = (checkBox, book) => {
             }
         } else {
             if (!page.contains(checkBox.parentElement)) {
-            page.appendChild(checkBox.parentElement);
-            book.isRead();
+                page.appendChild(checkBox.parentElement);
+                book.isRead();
             }
         }
     });
@@ -93,12 +103,13 @@ addBtn.addEventListener("click", () => {
 });
 
 submit.addEventListener("click", (e) => {
-    const title = document.querySelector(".book-title").value;
-    const author = document.querySelector(".book-author").value;
-    const pages = document.querySelector(".book-pages").value;
+    const title = dialog.querySelector(".book-title").value;
+    const author = dialog.querySelector(".book-author").value;
+    const pages = dialog.querySelector(".book-pages").value;
     e.preventDefault();
     if (form.checkValidity()) {
         const book = addBookToLibrary(title, author, pages);
+        isChecked = checkBox.checked;
         displayBook(book);
         dialog.close();
         form.reset();

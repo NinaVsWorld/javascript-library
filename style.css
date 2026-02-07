@@ -18,11 +18,25 @@ body {
 .shelf {
     display: flex;
     flex-wrap: wrap;
+    gap: 1.5rem;
 }
 
 .card {
     border: red solid 2px;
     background-color: bisque;
-    width: 200px;
+    width: 175px;
+    height: 225px;
+    padding: 10px;
     visibility: hidden;
+}
+
+.book {
+    background-color: aquamarine;
+    height: 85%;
+}
+
+.read {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
