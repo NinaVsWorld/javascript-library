@@ -1,6 +1,6 @@
 const library = [];
 const page = document.querySelector(".shelf");
-const readShelf = document.querySelector(".read");
+const readShelf = document.querySelector(".read-shelf");
 const dialog = document.querySelector("dialog");
 const addBtn = document.querySelector(".new");
 const submit = document.querySelector(".add");
@@ -34,6 +34,7 @@ function addBookToLibrary(title, author, pages) {
 const createCard = (book) => {
     card = document.querySelector(".card").cloneNode(true);
     card.style.visibility = "visible";
+    card.classList.add("book");
     card.querySelector(".title").textContent = book.title;
     card.querySelector(".author").textContent = book.author;
     card.querySelector(".pages").textContent = book.pages;

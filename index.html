@@ -8,24 +8,36 @@
     <title>Library</title>
 </head>
 <body>
-    <div class="header"></div>
-    <div class="reading">
-        <div class="shelf"></div>
-        <button class="new">Add</button>
+    <div class="header">
+        <h1>Library</h1>
     </div>
-    <div class="read"></div>
+    <div class="reading">
+        <div class="section-heading">
+            <h2>Unread Books</h2>
+            <button class="new">Add</button>
+        </div>
+        <div class="shelf-container">
+            <div class="shelf"></div>
+        </div>
+    </div>
+    <div class="read">
+        <div class="section-heading">
+            <h2>Read Books</h2>
+        </div>
+        <div class="read-shelf"></div>
+    </div>
 </body>
 
 <div class="card">
-    <div class="book">
+    <div class="book-info">
         <p class="title"></p>
         <p class="author"></p>
         <p class="pages"></p>
         <p class="status"></p>
     </div>
     <button class="delete">Delete</button>
-    <label for="">read</label>
-    <input type="checkbox" class="read-status">
+    <label for="read">read</label>
+    <input type="checkbox" class="read-status" id="read">
 </div>
 
 <dialog>

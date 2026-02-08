@@ -6,37 +6,81 @@
 
 body {
     height: 100vh;
+    background-color: whitesmoke;
+    display: grid;
+    grid-template-rows: 8vh 1fr 1fr;
+    grid-template-areas: 
+        "header"
+        "reading-shelf"
+        "read-shelf";
+}
+
+.header {
+    background-color: whitesmoke;
+    padding: 1em;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    grid-area: header;
+}
+
+.section-heading {
+    display: flex;
+    padding: 1rem;
+    grid-area: unread-books;
+}
+
+h2 {
+    margin-right: auto;
+}
+
+.card.book {
+    border: red solid 2px;
+    background-color: bisque;
+    min-width: 225px;
+    min-height: 150px;
+    padding: 10px;
+}
+
+.card {
+    visibility: hidden;
+    height: 0;
+    width: 0;
+}
+
+.book-info {
+    background-color: aquamarine;
+    height: 85%;
 }
 
 .reading {
-    min-height: 50vh;
+    display: grid;
+    grid-template-rows: max-content 1fr;
+    grid-template-areas:
+        "unread-books"
+        "shelf";
+}
+
+.read {
+    grid-area: read-shelf;
+    display: grid;
+    grid-template-rows: max-content 1fr;
+    grid-template-areas: 
+        "unread-books";
+}
+
+.shelf-container {
+    grid-area: shelf;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    border-bottom: black solid 2px;
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-bottom: 1em;
 }
 
 .shelf {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.5rem;
-}
-
-.card {
-    border: red solid 2px;
-    background-color: bisque;
-    width: 175px;
-    height: 225px;
-    padding: 10px;
-    visibility: hidden;
-}
-
-.book {
-    background-color: aquamarine;
-    height: 85%;
-}
-
-.read {
-    display: flex;
     justify-content: center;
-    align-items: center;
+    gap: 20px;
 }
