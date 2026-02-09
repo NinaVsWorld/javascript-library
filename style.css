@@ -94,7 +94,8 @@ h2 {
     padding-bottom: 1em;
 }
 
-.shelf {
+.shelf,
+.read-shelf {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -117,7 +118,9 @@ h2 {
     width: 1.5em;
 }
 
-.new:hover {
+.new:hover,
+.cancel:hover,
+.add:hover {
     background-color: #5E4630;
 }
 
@@ -153,4 +156,74 @@ input[type="checkbox"] {
 
 svg {
     fill: #7A5C3E;
+}
+
+dialog[open] {
+    width: 400px;
+    height: 400px;
+    inset: 0;
+    margin: auto;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f6f2;
+    padding: 2em;
+    gap: 25px;
+    border: #8B6F5A solid 2px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-self: flex-start;
+}
+
+.input input {
+    height: 30px;
+    width: 200px;
+    padding: 0.5em;
+    border-radius: 5px;
+    border: #8B6F5A solid 2px;
+    font-family: "Inter", sans-serif;
+}
+
+.input input:focus {
+    outline-color: #8B6F5A;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.read-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 40%;
+}
+
+.read-input input {
+    width: 20px;
+}
+
+.add, 
+.cancel {
+    background-color: #7A5C3E;
+    color: #FFFFFF;
+    padding: 0.5em;
+    width: 75px;
+    border-radius: 5px;
+}
+
+.buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.new-book {
+    align-self: flex-start;
 }

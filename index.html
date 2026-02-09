@@ -61,17 +61,28 @@
 </div>
 
 <dialog>
+    <h2 class="new-book">New Book</h2>
     <form>
-        <label for="book-title">Title</label>
-        <input type="text" class="book-title" id="book-title" required>
-        <label for="book-author">Author</label>
-        <input type="text" class="book-author" id="book-author" required>
-        <label for="book-pages">Pages</label>
-        <input type="tel" class="book-pages" id="book-pages" required>
-        <label for="is-read">read?</label>
-        <input type="checkbox" id="is-read" class="is-read">
-        <button type="button" class="cancel">Cancel</button>
-        <button type="submit" class="add">OK</button>
+        <div class="input">
+            <label for="book-title">Title</label>
+            <input type="text" class="book-title" id="book-title" required placeholder="e.g. Diary Of A Wimpy Kid">
+        </div>
+        <div class="input">
+            <label for="book-author">Author</label>
+            <input type="text" class="book-author" id="book-author" required placeholder="e.g. Jeff Kinney">
+        </div>
+        <div class="input">
+            <label for="book-pages">Pages</label>
+            <input type="tel" class="book-pages" id="book-pages" required placeholder="e.g. 221">
+        </div>
+        <div class="input read-input">
+            <label for="is-read">Read?</label>
+            <input type="checkbox" id="is-read" class="is-read">
+        </div>
+        <div class="buttons">
+            <button type="button" class="cancel">Cancel</button>
+            <button type="submit" class="add">OK</button>
+        </div>
     </form>
 </dialog>
 </html>
