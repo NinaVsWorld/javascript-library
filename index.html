@@ -4,17 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="script.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400..700;1,400..700&family=Micro+5&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Orbitron:wght@400..900&family=Patrick+Hand&family=Recursive:wght@300..1000&family=Roboto:ital,wght@0,100..900;1,100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Libre+Baskerville:ital,wght@0,400..700;1,400..700&family=Micro+5&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Orbitron:wght@400..900&family=Patrick+Hand&family=Recursive:wght@300..1000&family=Roboto:ital,wght@0,100..900;1,100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>Library</title>
 </head>
 <body>
     <div class="header">
-        <h1>Library</h1>
+        <h1>
+            <svg class="library-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>bookshelf</title><path d="M9 3V18H12V3H9M12 5L16 18L19 17L15 4L12 5M5 5V18H8V5H5M3 19V21H21V19H3Z" /></svg>
+            Library
+        </h1>
     </div>
     <div class="reading">
         <div class="section-heading">
             <h2>Unread Books</h2>
-            <button class="new">Add</button>
+            <button class="new">
+                <svg class="plus" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>plus</title><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
+                Add
+            </button>
         </div>
         <div class="shelf-container">
             <div class="shelf"></div>
@@ -24,7 +36,9 @@
         <div class="section-heading">
             <h2>Read Books</h2>
         </div>
-        <div class="read-shelf"></div>
+        <div class="shelf-container">
+            <div class="read-shelf"></div>
+        </div>
     </div>
 </body>
 
@@ -35,9 +49,15 @@
         <p class="pages"></p>
         <p class="status"></p>
     </div>
-    <button class="delete">Delete</button>
-    <label for="read">read</label>
-    <input type="checkbox" class="read-status" id="read">
+    <div class="controls">
+        <button class="delete">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>trash-can-outline</title><path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" /></svg>
+        </button>
+        <label class="read-button" for="read">
+            <svg class="read-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>book-open-blank-variant</title><path d="M6.5 20C8.2 20 10.65 20.65 12 21.5C13.35 20.65 15.8 20 17.5 20C19.15 20 20.85 20.3 22.25 21.05C22.35 21.1 22.4 21.1 22.5 21.1C22.75 21.1 23 20.85 23 20.6V6C22.4 5.55 21.75 5.25 21 5C19.89 4.65 18.67 4.5 17.5 4.5C15.55 4.5 13.45 4.9 12 6C10.55 4.9 8.45 4.5 6.5 4.5C5.33 4.5 4.11 4.65 3 5C2.25 5.25 1.6 5.55 1 6V20.6C1 20.85 1.25 21.1 1.5 21.1C1.6 21.1 1.65 21.1 1.75 21.05C3.15 20.3 4.85 20 6.5 20M12 19.5V8C13.35 7.15 15.8 6.5 17.5 6.5C18.7 6.5 19.9 6.65 21 7V18.5C19.9 18.15 18.7 18 17.5 18C15.8 18 13.35 18.65 12 19.5Z" /></svg>
+        </label>
+        <input type="checkbox" class="read-status" id="read">
+    </div>
 </div>
 
 <dialog>

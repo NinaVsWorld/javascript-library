@@ -37,7 +37,7 @@ const createCard = (book) => {
     card.classList.add("book");
     card.querySelector(".title").textContent = book.title;
     card.querySelector(".author").textContent = book.author;
-    card.querySelector(".pages").textContent = book.pages;
+    card.querySelector(".pages").textContent = book.pages + " pages";
     card.dataset.bookId = book.id;
 
     if (isChecked) {
@@ -66,12 +66,12 @@ const displayBook = (book) => {
 const removeCard = (btn) => {
     btn.addEventListener("click", () => {
         for (const book of library) {
-            if (btn.parentElement.dataset.bookId === book.id) {
+            if (btn.parentElement.parentElement.dataset.bookId === book.id) {
                 removeBook(book);
-                if (page.contains(btn.parentElement)) {
-                    page.removeChild(btn.parentElement);
+                if (page.contains(btn.parentElement.parentElement)) {
+                    page.removeChild(btn.parentElement.parentElement);
                 } else {
-                    readShelf.removeChild(btn.parentElement);
+                    readShelf.removeChild(btn.parentElement.parentElement);
                 }
             }
         }
@@ -81,13 +81,13 @@ const removeCard = (btn) => {
 const moveBook = (checkBox, book) => {
     checkBox.addEventListener("change", () => {
         if (checkBox.checked) {
-            if (!readShelf.contains(checkBox.parentElement)) {
-                readShelf.appendChild(checkBox.parentElement);
+            if (!readShelf.contains(checkBox.parentElement.parentElement)) {
+                readShelf.appendChild(checkBox.parentElement.parentElement);
                 book.isRead();
             }
         } else {
-            if (!page.contains(checkBox.parentElement)) {
-                page.appendChild(checkBox.parentElement);
+            if (!page.contains(checkBox.parentElement.parentElement)) {
+                page.appendChild(checkBox.parentElement.parentElement);
                 book.isRead();
             }
         }

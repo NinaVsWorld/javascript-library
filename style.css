@@ -6,17 +6,28 @@
 
 body {
     height: 100vh;
-    background-color: whitesmoke;
+    background-color: #f9f6f2;
     display: grid;
-    grid-template-rows: 8vh 1fr 1fr;
+    grid-template-rows: max-content 1fr 1fr;
     grid-template-areas: 
         "header"
         "reading-shelf"
         "read-shelf";
+    font-family: "Libre Baskerville", serif;
+    color: #2E2A26;
+}
+
+.library-icon {
+    width: 45px;
+    fill: #2E2A26;
+}
+
+h1 {
+    display: flex;
+    align-items: center;
 }
 
 .header {
-    background-color: whitesmoke;
     padding: 1em;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     grid-area: header;
@@ -24,6 +35,7 @@ body {
 
 .section-heading {
     display: flex;
+    align-items: center;
     padding: 1rem;
     grid-area: unread-books;
 }
@@ -33,22 +45,25 @@ h2 {
 }
 
 .card.book {
-    border: red solid 2px;
-    background-color: bisque;
+    border: #8B6F5A solid 2px;
+    background-color: #f4e5d6;
     min-width: 225px;
     min-height: 150px;
     padding: 10px;
+    border-radius: 10px;
 }
 
 .card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     visibility: hidden;
     height: 0;
     width: 0;
 }
 
 .book-info {
-    background-color: aquamarine;
-    height: 85%;
+    line-height: 1.5rem;
 }
 
 .reading {
@@ -57,6 +72,7 @@ h2 {
     grid-template-areas:
         "unread-books"
         "shelf";
+    border-bottom: black solid 1px;
 }
 
 .read {
@@ -64,7 +80,8 @@ h2 {
     display: grid;
     grid-template-rows: max-content 1fr;
     grid-template-areas: 
-        "unread-books";
+        "unread-books"
+        "shelf";
 }
 
 .shelf-container {
@@ -72,7 +89,6 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: black solid 2px;
     padding-left: 1em;
     padding-right: 1em;
     padding-bottom: 1em;
@@ -83,4 +99,58 @@ h2 {
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
+}
+
+.new {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100px;
+    background-color: #7A5C3E;
+    color: #FFFFFF;
+    padding: 0.75em;
+    border-radius: 10px;
+}
+
+.plus {
+    fill: #FFFFFF;
+    width: 1.5em;
+}
+
+.new:hover {
+    background-color: #5E4630;
+}
+
+button {
+    font-family: "Inter", sans-serif;
+}
+
+.delete {
+    width: 30px;
+    border: none;
+    background-color: #f4e5d6;
+}
+
+.delete:hover {
+    svg {
+        fill: #5E4630;
+    }
+}
+
+.read-icon {
+    width: 30px;
+}
+
+.controls {
+    display: flex;
+}
+
+input[type="checkbox"] {
+    margin-left: 5px;
+    width: 17px;
+    accent-color: #7A5C3E;
+}
+
+svg {
+    fill: #7A5C3E;
 }
