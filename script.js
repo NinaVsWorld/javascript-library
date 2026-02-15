@@ -1,4 +1,4 @@
-const library = [];
+//const library = [];
 const page = document.querySelector(".shelf");
 const readShelf = document.querySelector(".read-shelf");
 const dialog = document.querySelector("dialog");
@@ -9,21 +9,31 @@ const form = document.querySelector("form");
 const checkBox = document.querySelector(".is-read");
 let isChecked = false;
 
-function Book(title, author, pages) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = false;
-    this.id = crypto.randomUUID();
-}
-
-Book.prototype.isRead = function() {
-    if (this.read) {
+class Book {
+    constructor(title, author, pages) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
         this.read = false;
-    } else {
-        this.read = true;
+        this.id = crypto.randomUUID();
+    }
+
+    isRead() {
+        if (this.read) {
+            this.read = false;
+        } else {
+            this.read = true;
+        }
     }
 }
+
+class Library {
+    constructor() {
+        this.library = [];
+    }
+}
+
+/*
 
 function addBookToLibrary(title, author, pages) {
   const book = new Book(title, author, pages);
@@ -126,3 +136,4 @@ cancel.addEventListener("click", () => {
 const book1 = addBookToLibrary("A Handmaid's Tale", "Margaret Atwood", 420);
 const book2 = addBookToLibrary("A Little Life", "Hanya Yanagihara", 736);
 library.forEach(book => displayBook(book));
+*/
