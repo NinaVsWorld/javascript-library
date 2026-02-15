@@ -1,5 +1,4 @@
-//const library = [];
-const page = document.querySelector(".shelf");
+/*const page = document.querySelector(".shelf");
 const readShelf = document.querySelector(".read-shelf");
 const dialog = document.querySelector("dialog");
 const addBtn = document.querySelector(".new");
@@ -7,7 +6,7 @@ const submit = document.querySelector(".add");
 const cancel = document.querySelector(".cancel");
 const form = document.querySelector("form");
 const checkBox = document.querySelector(".is-read");
-let isChecked = false;
+let isChecked = false;*/
 
 class Book {
     constructor(title, author, pages) {
@@ -18,13 +17,9 @@ class Book {
         this.id = crypto.randomUUID();
     }
 
-    isRead() {
-        if (this.read) {
-            this.read = false;
-        } else {
-            this.read = true;
-        }
-    }
+    toggleReadStatus() { this.read = !this.read; }
+    getBookID() { return this.id; }
+    isRead() { return this.read; }
 }
 
 class Library {
@@ -37,10 +32,35 @@ class Library {
         this.library.push(book);
         return book;
     }
+
+    getBook(bookID) {
+        return this.library.find(book => book.getBookID() === bookID);
+    }
 }
 
-/*
+class LibraryApp {
+    #readShelf = document.querySelector(".read-shelf");
+    #unreadShelf = document.querySelector(".shelf");
+    #checkBox = document.querySelector(".is-read");
 
+    constructor(library) {
+        this.library = library;
+    }
+
+    moveBook(bookID) {
+        this.#checkBox.addEventListener("change", () => {
+            const book = this.library.getBook(bookID);
+            const card = document.querySelector(`[data-book-id="${book.getBookID()}"]`);
+            book.toggleReadStatus();
+            if (book.isRead()) {
+                this.#readShelf.appendChild(card);
+            } else {
+                this.#unreadShelf.appendChild(card);
+            }
+        });
+    }
+}
+/*
 const createCard = (book) => {
     card = document.querySelector(".card").cloneNode(true);
     card.style.visibility = "visible";
@@ -83,22 +103,6 @@ const removeCard = (btn) => {
                 } else {
                     readShelf.removeChild(btn.parentElement.parentElement);
                 }
-            }
-        }
-    });
-}
-
-const moveBook = (checkBox, book) => {
-    checkBox.addEventListener("change", () => {
-        if (checkBox.checked) {
-            if (!readShelf.contains(checkBox.parentElement.parentElement)) {
-                readShelf.appendChild(checkBox.parentElement.parentElement);
-                book.isRead();
-            }
-        } else {
-            if (!page.contains(checkBox.parentElement.parentElement)) {
-                page.appendChild(checkBox.parentElement.parentElement);
-                book.isRead();
             }
         }
     });
