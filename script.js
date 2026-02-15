@@ -31,15 +31,15 @@ class Library {
     constructor() {
         this.library = [];
     }
+
+    addBook(title, author, pages) {
+        const book = new Book(title, author, pages);
+        this.library.push(book);
+        return book;
+    }
 }
 
 /*
-
-function addBookToLibrary(title, author, pages) {
-  const book = new Book(title, author, pages);
-  library.push(book);
-  return book;
-}
 
 const createCard = (book) => {
     card = document.querySelector(".card").cloneNode(true);
