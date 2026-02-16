@@ -68,7 +68,6 @@ class LibraryApp {
         e.preventDefault();
         if (this.#form.checkValidity()) {
             const book = this.library.addBook(title, author, pages);
-            // if checkbox is checked, toggle status
             this.#formReadStatus(book);
             this.#renderBook(book);
             this.#dialog.close();
