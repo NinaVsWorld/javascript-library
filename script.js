@@ -1,13 +1,3 @@
-/*const page = document.querySelector(".shelf");
-const readShelf = document.querySelector(".read-shelf");
-const dialog = document.querySelector("dialog");
-const addBtn = document.querySelector(".new");
-const submit = document.querySelector(".add");
-const cancel = document.querySelector(".cancel");
-const form = document.querySelector("form");
-const checkBox = document.querySelector(".is-read");
-let isChecked = false;*/
-
 class Book {
     constructor(title, author, pages) {
         this.title = title;
@@ -20,6 +10,9 @@ class Book {
     toggleReadStatus() { this.read = !this.read; }
     getBookID() { return this.id; }
     isRead() { return this.read; }
+    getTitle() { return this.title; }
+    getAuthor() { return this.author; }
+    getPages() { return this.pages; }
 }
 
 class Library {
@@ -36,21 +29,95 @@ class Library {
     getBook(bookID) {
         return this.library.find(book => book.getBookID() === bookID);
     }
+
+    removeBook(bookID) {
+        this.library = this.library.filter(book => book.id !== bookID);
+    }
+
+    getLibrary() {
+        return this.library;
+    }
 }
 
 class LibraryApp {
     #readShelf = document.querySelector(".read-shelf");
     #unreadShelf = document.querySelector(".shelf");
-    #checkBox = document.querySelector(".is-read");
+    #dialog = document.querySelector("dialog");
+    #form = document.querySelector("form");
+    #submit = document.querySelector(".add");
+    #cancel = document.querySelector(".cancel");
+    #newBook = document.querySelector(".new");
+    #card = document.querySelector(".card");
+    #formCheckBox = this.#form.querySelector(".is-read");
 
     constructor(library) {
         this.library = library;
     }
 
-    moveBook(bookID) {
-        this.#checkBox.addEventListener("change", () => {
-            const book = this.library.getBook(bookID);
-            const card = document.querySelector(`[data-book-id="${book.getBookID()}"]`);
+    init() {
+        this.#displayBooks(this.library.getLibrary());
+        this.#newBook.addEventListener("click", () => { this.#dialog.showModal(); });
+        this.#cancel.addEventListener("click", () => { this.#dialog.close(); });
+        this.#submit.addEventListener("click", this.#addBook.bind(this));
+    }
+
+    #addBook(e) {
+        const title = this.#form.querySelector(".book-title").value;
+        const author = this.#form.querySelector(".book-author").value;
+        const pages = this.#form.querySelector(".book-pages").value;
+        e.preventDefault();
+        if (this.#form.checkValidity()) {
+            const book = this.library.addBook(title, author, pages);
+            // if checkbox is checked, toggle status
+            this.#formReadStatus(book);
+            this.#renderBook(book);
+            this.#dialog.close();
+            this.#form.reset();
+        } else {
+            this.#form.reportValidity();
+        }
+    }
+
+    #formReadStatus(book) {
+        if (this.#formCheckBox.checked) { book.toggleReadStatus(); }
+    }
+
+    #renderBook(book) {
+        const clone = this.#card.cloneNode(true);
+        clone.style.visibility = "visible";
+        clone.classList.add("book");
+        clone.querySelector(".title").textContent = book.getTitle();
+        clone.querySelector(".author").textContent = book.getAuthor();
+        clone.querySelector(".pages").textContent = `${book.getPages()} pages`;
+        clone.dataset.bookId = book.getBookID();
+
+        if (book.isRead()) {
+            this.#readShelf.appendChild(clone);
+            clone.querySelector(".read-status").checked = true;
+        } else {
+            this.#unreadShelf.appendChild(clone);
+        }
+
+        this.#removeBook(clone);
+        this.#moveBook(clone, book);
+    }
+
+    #removeBook(card) {
+        const deleteBtn = card.querySelector(".delete");
+        const bookID = card.dataset.bookId;
+        deleteBtn.addEventListener("click", () => {
+            this.library.removeBook(bookID);
+            if (this.#unreadShelf.contains(card)) {
+                this.#unreadShelf.removeChild(card);
+            } else {
+                this.#readShelf.removeChild(card);
+            }
+        });
+    }
+
+    #moveBook(card, book) {
+        const checkBox = card.querySelector(".read-status");
+        checkBox.addEventListener("change", () => {
             book.toggleReadStatus();
             if (book.isRead()) {
                 this.#readShelf.appendChild(card);
@@ -59,85 +126,14 @@ class LibraryApp {
             }
         });
     }
-}
-/*
-const createCard = (book) => {
-    card = document.querySelector(".card").cloneNode(true);
-    card.style.visibility = "visible";
-    card.classList.add("book");
-    card.querySelector(".title").textContent = book.title;
-    card.querySelector(".author").textContent = book.author;
-    card.querySelector(".pages").textContent = book.pages + " pages";
-    card.dataset.bookId = book.id;
 
-    if (isChecked) {
-        book.isRead();
-        card.querySelector(".read-status").checked = true;
+    #displayBooks(books) {
+        this.library.getLibrary().forEach(book => this.#renderBook(book));
     }
-    return card;
 }
 
-const displayBook = (book) => {
-    const card = createCard(book);
-    if (card.querySelector(".read-status").checked) {
-        readShelf.appendChild(card);
-    } else {
-        page.appendChild(card);
-    }
-
-    // Must query all buttons at every new addition, in order not to leave anything out
-    const deleteBtns = document.querySelectorAll(".delete");
-    deleteBtns.forEach(btn => removeCard(btn));
-
-    const statusBtns = document.querySelectorAll(".read-status");
-    statusBtns.forEach(box => moveBook(box, book));
-}
-
-const removeCard = (btn) => {
-    btn.addEventListener("click", () => {
-        for (const book of library) {
-            if (btn.parentElement.parentElement.dataset.bookId === book.id) {
-                removeBook(book);
-                if (page.contains(btn.parentElement.parentElement)) {
-                    page.removeChild(btn.parentElement.parentElement);
-                } else {
-                    readShelf.removeChild(btn.parentElement.parentElement);
-                }
-            }
-        }
-    });
-}
-
-const removeBook = (book) => {
-    const index = library.indexOf(book);
-    library.splice(index, 1);
-}
-
-addBtn.addEventListener("click", () => {
-    dialog.showModal();
-});
-
-submit.addEventListener("click", (e) => {
-    const title = dialog.querySelector(".book-title").value;
-    const author = dialog.querySelector(".book-author").value;
-    const pages = dialog.querySelector(".book-pages").value;
-    e.preventDefault();
-    if (form.checkValidity()) {
-        const book = addBookToLibrary(title, author, pages);
-        isChecked = checkBox.checked;
-        displayBook(book);
-        dialog.close();
-        form.reset();
-    } else {
-        form.reportValidity();
-    }
-});
-
-cancel.addEventListener("click", () => {
-    dialog.close();
-});
-
-const book1 = addBookToLibrary("A Handmaid's Tale", "Margaret Atwood", 420);
-const book2 = addBookToLibrary("A Little Life", "Hanya Yanagihara", 736);
-library.forEach(book => displayBook(book));
-*/
+const library = new Library();
+library.addBook("A Handmaid's Tale", "Margaret Atwood", 420);
+library.addBook("A Little Life", "Hanya Yanagihara", 736);
+const libraryApp = new LibraryApp(library);
+libraryApp.init();
