@@ -12,3 +12,6 @@ I utilised CSS grid to section the page. Flexbox was used on the grid items to g
 
 ## Lessons Learned
 I learned that when using preventDefault(), it will override the HTML "required" keyword. This required me to use JavaScript to enforce my desired form validation for adding new books. Additionally, not really a lesson learned but I would like to reduce my use of global code, as there are quite a few lines for query selecting HTML elements. I'm in a bit of a dilemma, because selecting elements in each call of a function seems inefficient, however, the trade off is that there will be more global code.
+
+## Updates
+I refactored the JS code to use classes instead of plain constructors and accessing the object prototype. The code is longer than before, however, the codebase is organised and the only global code are instances of the classes to run the application. All the DOM logic, book and library logic have been encapsulated into classes. The biggest win for me is that I really focused on improving separation of concerns and letting the logic dictate the UI, not mixing them together like before.
