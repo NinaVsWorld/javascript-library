@@ -53,7 +53,6 @@ class LibraryApp {
     #pages = document.getElementById("book-pages");
     #pageError = document.getElementById("page-error");
 
-    #submit = document.querySelector(".add");
     #cancel = document.querySelector(".cancel");
     #newBook = document.querySelector(".new");
     #card = document.querySelector(".card");
@@ -66,9 +65,7 @@ class LibraryApp {
     init() {
         this.#displayBooks(this.library.getLibrary());
         this.#newBook.addEventListener("click", () => { this.#dialog.showModal(); });
-        this.#cancel.addEventListener("click", () => { 
-            this.#resetForm();
-        });
+        this.#cancel.addEventListener("click", () => { this.#resetForm(); });
 
         this.#form.addEventListener("submit", (event) => {
             event.preventDefault();
