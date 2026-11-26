@@ -44,6 +44,15 @@ class LibraryApp {
     #unreadShelf = document.querySelector(".shelf");
     #dialog = document.querySelector("dialog");
     #form = document.querySelector("form");
+    #title = document.getElementById("book-title");
+    #titleError = document.getElementById("title-error");
+
+    #author = document.getElementById("book-author");
+    #authorError = document.getElementById("author-error");
+
+    #pages = document.getElementById("book-pages");
+    #pageError = document.getElementById("page-error");
+
     #submit = document.querySelector(".add");
     #cancel = document.querySelector(".cancel");
     #newBook = document.querySelector(".new");
@@ -57,24 +66,103 @@ class LibraryApp {
     init() {
         this.#displayBooks(this.library.getLibrary());
         this.#newBook.addEventListener("click", () => { this.#dialog.showModal(); });
-        this.#cancel.addEventListener("click", () => { this.#dialog.close(); });
-        this.#submit.addEventListener("click", this.#addBook.bind(this));
+        this.#cancel.addEventListener("click", () => { 
+            this.#resetForm();
+        });
+
+        this.#form.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            if (!this.#title.validity.valid) {
+                this.#showTitleError();
+            }
+
+            if (!this.#author.validity.valid) {
+                this.#showAuthorError();
+            }
+
+            if (!this.#pages.validity.valid) {
+                this.#showPageError();
+            }
+
+            if (this.#form.checkValidity()) {
+                this.#addBook();
+            }
+        });
+
+        this.#title.addEventListener("input", () => {
+            if (this.#title.validity.valid) {
+                this.#titleError.textContent = "";
+                this.#titleError.className = "error";
+            } else {
+                this.#showTitleError();
+            }
+        });
+
+        this.#author.addEventListener("input", () => {
+            if (this.#author.validity.valid) {
+                this.#authorError.textContent = "";
+                this.#authorError.className = "error";
+            } else {
+                this.#showAuthorError();
+            }
+        });
+
+        this.#pages.addEventListener("input", () => {
+            if (this.#pages.validity.valid) {
+                this.#pageError.textContent = "";
+                this.#pageError.className = "error";
+            } else {
+                this.#showPageError();
+            }
+        });
     }
 
-    #addBook(e) {
-        const title = this.#form.querySelector(".book-title").value;
-        const author = this.#form.querySelector(".book-author").value;
-        const pages = this.#form.querySelector(".book-pages").value;
-        e.preventDefault();
-        if (this.#form.checkValidity()) {
-            const book = this.library.addBook(title, author, pages);
-            this.#formReadStatus(book);
-            this.#renderBook(book);
-            this.#dialog.close();
-            this.#form.reset();
-        } else {
-            this.#form.reportValidity();
+    #addBook() {
+        const bookTitle = this.#title.value;
+        const bookAuthor = this.#author.value;
+        const bookPages = this.#pages.value;
+        const book = this.library.addBook(bookTitle, bookAuthor, bookPages);
+        this.#formReadStatus(book);
+        this.#renderBook(book);
+        this.#resetForm();
+    }
+
+    #resetForm() {
+        this.#form.reset();
+        this.#titleError.textContent = "";
+        this.#titleError.className = "error";
+        this.#authorError.textContent = "";
+        this.#authorError.className = "error";
+        this.#pageError.textContent = "";
+        this.#pageError.className = "error";
+        this.#dialog.close();
+    }
+
+    #showTitleError() {
+        if (this.#title.validity.valueMissing) {
+            this.#titleError.textContent = "The book name must be filled!";
         }
+        this.#titleError.className = "error active";
+    }
+
+    #showAuthorError() {
+        if (this.#author.validity.valueMissing) {
+            this.#authorError.textContent = "The author name must be filled!";
+        }
+        this.#authorError.className = "error active";
+    }
+    
+    #showPageError() {
+        if (this.#pages.validity.valueMissing) {
+            this.#pageError.textContent = "Please enter pages!";
+        } else if (Number.isNaN(this.#pages.value)) {
+            this.#pageError.textContent = "Please enter a number!";
+        }
+        else if (this.#pages.validity.rangeUnderflow) {
+            this.#pageError.textContent = "A book cannot have 0 or less pages!";
+        }
+        this.#pageError.className = "error active";
     }
 
     #formReadStatus(book) {

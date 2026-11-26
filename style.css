@@ -160,7 +160,7 @@ svg {
 
 dialog[open] {
     width: 400px;
-    height: 400px;
+    height: 500px;
     inset: 0;
     margin: auto;
     border-radius: 15px;
@@ -226,4 +226,24 @@ form {
 
 .new-book {
     align-self: flex-start;
+}
+
+/* custom form validation */
+input:user-invalid {
+    border-color: #990000;
+    background-color: #ffdddd;
+}
+
+.error {
+    width: 100%;
+    padding: 0;
+    font-size: 80%;
+    color: white;
+    background-color: #990000;
+    border-radius: 0 0 5px 5px;
+    box-sizing: border-box;
+}
+
+.error.active {
+    padding: 0.3em;
 }
